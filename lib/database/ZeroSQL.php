@@ -1581,6 +1581,7 @@ class ZeroSQL{
     #endregion
 
     #region Database and Table Schema
+    //No need to call execute()
     public function truncate($tableName){
         $this->_debugBacktrace();
         $sql = "TRUNCATE TABLE `$tableName`";

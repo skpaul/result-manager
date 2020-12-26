@@ -4,12 +4,8 @@
     require_once("Required.php");
    
     Required::SwiftLogger()
-    ->Session()
     ->ZeroSQL()
-    ->SwiftDatetime()
-    ->EnDecryptor()
-    ->SwiftJSON()
-    ->Photo();
+    ->SwiftDatetime();
    
     $logger = new SwiftLogger(ROOT_DIRECTORY);
     $db = new ZeroSQL();
@@ -17,7 +13,7 @@
     $db->connect();
 
 
-    $db->truncate("post_calculation");
+   
 
     function executeQuery($conn, $sql){
         // $logger = new SwiftLogger(ROOT_DIRECTORY);
@@ -590,6 +586,21 @@
 
     try {
 
+        $db->truncate("post_calculation");
+
+        //select all posts 
+        $posts = $db->select()->from("posts")->toList();
+
+        foreach ($posts as $post) {
+            $vacancies = $post->vacancies;
+            $distPercentage = $post->districtQuota;
+            $femalePercentage = $post->femaleQuota;
+            $freedomFighterPercentage = $post->freedomFighterQuota;
+            $tribalPercentage = $post->tribalQuota;
+            
+            echo $vacancies;
+        }
+
         // $con = mysqli_connect("localhost", "root", "", "ntrca");
         // createChoicesTable($con);
         // truncateChoices($con);
@@ -599,7 +610,8 @@
 
         // suggestFromOwnThana($con);
 
-        echo "done";
+        $db->close();
+        echo "<br>done";
 
 
     } catch (\Exception $exp) {
